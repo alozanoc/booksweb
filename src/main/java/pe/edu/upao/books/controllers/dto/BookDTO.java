@@ -1,54 +1,37 @@
-package pe.edu.upao.books.models;
+package pe.edu.upao.books.controllers.dto;
 
-import jakarta.persistence.*;
+import pe.edu.upao.books.models.Book;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Entity
-@Table(name = "books")
-public class Book {
-
-    @Id
-    @GeneratedValue
+public class BookDTO {
     private Long id;
-
-    @Column(nullable = false)
     private String title;
-
-    @Column(nullable = false)
     private String author;
-
-    @Column(nullable = true)
     private String genre;
-
-    @Column(nullable = false, length = 500)
     private String description;
-
-    @Column(name = "image_url")
     private String imageUrl;
-
-    @Column(name = "created_at")
     private LocalDateTime createdAt;
-
-    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+    private List<ReviewDTO> reviews;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "book")
-    private List<Review> reviews;
 
-    public Book() {
+    public BookDTO() {
     }
 
-    public Book(Long id, String title, String author, String description, String imageUrl, LocalDateTime createdAt, LocalDateTime updatedAt) {
-        this.id = id;
-        this.title = title;
-        this.author = author;
-        this.description = description;
-        this.imageUrl = imageUrl;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+    public BookDTO(Book book) {
+        this.setId(book.getId());
+        this.setTitle(book.getTitle());
+        this.setAuthor(book.getAuthor());
+        this.setGenre(book.getGenre());
+        this.setDescription(book.getDescription());
+        this.setImageUrl(book.getImageUrl());
+        this.setCreatedAt(book.getCreatedAt());
+        this.setUpdatedAt(book.getUpdatedAt());
+        this.setReviews(book.getReviews().stream().map(it -> new ReviewDTO(it)).toList());
     }
+
 
     public Long getId() {
         return id;
@@ -72,6 +55,14 @@ public class Book {
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
     }
 
     public String getDescription() {
@@ -106,19 +97,11 @@ public class Book {
         this.updatedAt = updatedAt;
     }
 
-    public String getGenre() {
-        return genre;
-    }
-
-    public void setGenre(String genre) {
-        this.genre = genre;
-    }
-
-    public List<Review> getReviews() {
+    public List<ReviewDTO> getReviews() {
         return reviews;
     }
 
-    public void setReviews(List<Review> reviews) {
+    public void setReviews(List<ReviewDTO> reviews) {
         this.reviews = reviews;
     }
 }
