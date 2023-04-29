@@ -21,7 +21,7 @@ public class BookService {
         return bookRepository.save(new Book(null, title, author, description, "", LocalDateTime.now(), LocalDateTime.now()));
     }
 
-    public Page<Book> search(String title, PageRequest page) {
-        return bookRepository.search(title, page);
+    public Page<Book> search(String title, String author, String genre, PageRequest page) {
+        return bookRepository.search(title, author, genre, page);
     }
 }

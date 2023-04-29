@@ -30,9 +30,11 @@ public class BookController {
 
     @GetMapping("/search")
     public ResponseEntity<Page<Book>> search(@RequestParam(defaultValue = "", required = false) String title,
+                                             @RequestParam(defaultValue = "", required = false) String author,
+                                             @RequestParam(required = false) String genre,
                                              @RequestParam(defaultValue = "0", required = false) Integer page,
                                              @RequestParam(defaultValue = "10", required = false) Integer pageSize) {
-        Page<Book> book = bookService.search(title, PageRequest.of(page, pageSize));
+        Page<Book> book = bookService.search(title, author, genre, PageRequest.of(page, pageSize));
         return ResponseEntity.ok(book);
     }
 }
