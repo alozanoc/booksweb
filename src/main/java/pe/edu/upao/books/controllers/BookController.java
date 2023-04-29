@@ -1,9 +1,11 @@
 package pe.edu.upao.books.controllers;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import pe.edu.upao.books.models.Book;
 import pe.edu.upao.books.services.BookService;
@@ -26,15 +28,9 @@ public class BookController {
         Book newBook = bookService.addBook(title, author, description, image);
         return ResponseEntity.ok(newBook);
     }
-
-
+    
     @GetMapping("/search")
-    public ResponseEntity<Page<Book>> search(@RequestParam(defaultValue = "", required = false) String title,
-                                             @RequestParam(defaultValue = "", required = false) String author,
-                                             @RequestParam(required = false) String genre,
-                                             @RequestParam(defaultValue = "0", required = false) Integer page,
-                                             @RequestParam(defaultValue = "10", required = false) Integer pageSize) {
-        Page<Book> book = bookService.search(title, author, genre, PageRequest.of(page, pageSize));
-        return ResponseEntity.ok(book);
+    public ResponseEntity<Book> search(@RequestParam String title) {
+        throw new RuntimeException();
     }
 }
