@@ -10,10 +10,10 @@ import java.util.List;
 
 public interface BookRepository extends JpaRepository<Book, Long> {
 
-    @Query("select b from Book b where b.title = :title")
+    @Query("SELECT b FROM Book b WHERE b.title = :title")
     public List<Book> listByTitle(String title);
-    @Query("select b from Book b where b.title LIKE CONCAT('%', :title, '%')" +
+    @Query("SELECT b FROM Book b WHERE b.title LIKE CONCAT('%', :title, '%')" +
             "AND b.author LIKE CONCAT('%', :author, '%')" +
-            "AND (:genre is null or b.genre = :genre)")
+            "AND (:genre IS NULL OR b.genre = :genre)")
     Page<Book> search(String title, String author, String genre, PageRequest page);
 }
