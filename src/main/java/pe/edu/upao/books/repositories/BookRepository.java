@@ -12,8 +12,8 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
     @Query("SELECT b FROM Book b WHERE b.title = :title")
     public List<Book> listByTitle(String title);
-    @Query("SELECT b FROM Book b WHERE b.title LIKE CONCAT('%', :title, '%')" +
-            "AND b.author LIKE CONCAT('%', :author, '%')" +
-            "AND (:genre IS NULL OR b.genre = :genre)")
+    @Query("SELECT b FROM Book b WHERE UPPER(b.title) LIKE CONCAT('%', UPPER(:title), '%')" +
+            "AND UPPER(b.author) LIKE CONCAT('%', UPPER(:author), '%')" +
+            "AND (:genre IS NULL OR UPPER(b.genre) = :genre)")
     Page<Book> search(String title, String author, String genre, PageRequest page);
 }
