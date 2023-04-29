@@ -1,6 +1,7 @@
 package pe.edu.upao.books.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import pe.edu.upao.books.models.Book;
@@ -18,5 +19,9 @@ public class BookService {
 
     public Book addBook(String title, String author, String description, MultipartFile image) {
         return bookRepository.save(new Book(null, title, author, description, "", LocalDateTime.now(), LocalDateTime.now()));
+    }
+
+    public Page<Book> search(String title, String author, String genre, PageRequest page) {
+        return bookRepository.search(title, author, genre, page);
     }
 }
