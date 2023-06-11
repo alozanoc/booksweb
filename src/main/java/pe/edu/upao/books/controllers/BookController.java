@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import pe.edu.upao.books.controllers.dto.BookDTO;
 import pe.edu.upao.books.controllers.dto.BookSmallDTO;
-import pe.edu.upao.books.controllers.dto.PageDTO;
 import pe.edu.upao.books.models.Book;
 import pe.edu.upao.books.services.BookService;
 
@@ -43,17 +42,12 @@ public class BookController {
 
 
     @GetMapping("/search")
-    public ResponseEntity<PageDTO<BookSmallDTO>> search(@RequestParam(defaultValue = "", required = false) String title,
+    public ResponseEntity<Page<BookSmallDTO>> search(@RequestParam(defaultValue = "", required = false) String title,
                                                         @RequestParam(defaultValue = "", required = false) String author,
                                                         @RequestParam(required = false) String genre,
                                                         @RequestParam(defaultValue = "0", required = false) Integer page,
                                                         @RequestParam(defaultValue = "10", required = false) Integer pageSize) {
         Page<Book> books = bookService.search(title, author, genre, PageRequest.of(page, pageSize));
-        return ResponseEntity.ok(
-                new PageDTO<>(
-                        books.map(it -> new BookSmallDTO(it)).stream().toList(),
-                        books.getNumber(),
-                        books.getTotalElements())
-        );
+        return ResponseEntity.ok(books.map(it -> new BookSmallDTO(it)));
     }
 }
