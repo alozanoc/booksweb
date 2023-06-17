@@ -4,9 +4,12 @@ public class SimpleUserDTO {
     String name;
     String username;
 
-    public SimpleUserDTO(String name, String username) {
+    String token;
+
+    public SimpleUserDTO(String name, String username, String token) {
         this.name = name;
         this.username = username;
+        this.token = token;
     }
 
     public String getName() {
@@ -23,5 +26,13 @@ public class SimpleUserDTO {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

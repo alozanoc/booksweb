@@ -17,15 +17,8 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public User authenticate(String username, String password) {
+    public User findByUserName(String username) {
         Optional<User> result = this.userRepository.findByUsername(username);
-        if (result.isEmpty()) {
-            return null;
-        }
-
-        if (Objects.equals(result.get().getPassword(), password)) {
-            return result.get();
-        }
-        return null;
+        return result.orElse(null);
     }
 }
